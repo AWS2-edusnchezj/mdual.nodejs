@@ -7,8 +7,12 @@ function showArtists(query) {
 			dataType: 'JSON',
 			success: function(data) {
 				$('.collection').html('');
-				for(let artist in data['artists']) {
-					$('.collection').append(createCardArtist(data['artists'][artist]));
+				if(data['artists'] != '') {
+					for(let artist in data['artists']) {
+						$('.collection').append(createCardArtist(data['artists'][artist]));
+					}
+				} else {
+					$('.collection').html('No se ha encontrado ningún artista.');
 				}
 			},
 			complete: function() {
