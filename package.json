@@ -23,11 +23,12 @@
       "cordova-plugin-whitelist": {}
     },
     "platforms": [
-      "android",
-      "browser"
+      "android"
     ]
   },
   "dependencies": {
-    "cordova-jquery": "^0.1.6"
+    "cheerio-select-tmp": "^0.1.1",
+    "cordova-jquery": "^0.1.6",
+    "parse5-htmlparser2-tree-adapter": "^6.0.1"
   }
 }

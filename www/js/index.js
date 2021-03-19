@@ -54,14 +54,17 @@ function showAllTasks() {
 }
 
 function addTaskToList(data, idTask) {
-	$('#listTasks').append('<li><a class="ui-btn ui-btn-icon-right ui-ica on-carat-r">'+ data +' <button class="deleteButton" value="'+ idTask +'"><i class="far fa-trash-alt"></i> Borrar</button></a></li>');
+	if(data != '') {
+		$('#listTasks').append('<li><a class="ui-btn ui-btn-icon-right ui-ica on-carat-r">'+ data +' <button class="deleteButton" value="'+ idTask +'"><i class="far fa-trash-alt"></i> Borrar</button></a></li>');
+	}
 }
 
 $('input[type=submit]').click(function() {
 	var newTaskItem = $('input[name=taskInput]').val();
-
-	addTaskIntoJson(newTaskItem);
-	location.reload();
+	if(newTaskItem != '') {
+		addTaskIntoJson(newTaskItem);
+		location.reload();
+	}
 });
 
 $('.deleteButton').click(function() {
