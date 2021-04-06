@@ -1,37 +1,33 @@
-function showArtists(query) {
-	if(query != '') {
-		$('#collection-progress').show();
-		$.ajax({
-			url: 'https://musicbrainz.org/ws/2/artist?query=' + query,
-			type: 'get',
-			dataType: 'JSON',
-			success: function(data) {
-				$('.collection').html('');
-				if(data['artists'] != '') {
-					for(let artist in data['artists']) {
-						$('.collection').append(createCardArtist(data['artists'][artist]));
-					}
-				} else {
-					$('.collection').html('No se ha encontrado ningún artista.');
-				}
-			},
-			complete: function() {
-				$('#collection-progress').hide();
-			}
+$('a[href=#ufs]').click(function() {
+	let selectCourse = $('select#selectCourse').material_select();
+	$.getJSON("data/courses.json", function( data ) {
+		$.each(data, function(course, dataCourse) {
+			$(selectCourse).appendTo(`<option>${dataCourse.name}</option>`);
 		});
-	} else {
-		$('.collection').html('');
-	}
-}
+	});
+});
 
-function createCardArtist(params) {
-	return '<li class="collection-item avatar"><img src="https://pbs.twimg.com/profile_images/1188507013233479681/WuNwaQ8R_400x400.jpg" alt="" class="circle"><span class="title">'+ params['name'] +'</span><p><em>'+ hideUndefined(params['type']) +'</em></p><a href="#details" class="secondary-content"><i class="material-icons">chevron_right</i></a></li>';
-	
-}
+function showModulesOfCourse(courseIndex) {
+	$.getJSON("data/courses.json", function( data ) {
+		$('div#ufs .row[0] .col h5').html(data[courseIndex]['name']);
+		$.each(data[courseIndex]['modules'], function(module, dataModule) {
+			$('div#ufs').append(`
+			<div class="row">
+				<div class="col s4">
+					<h6>${dataModule['code']}. ${dataModule['name']}</h6>
+				</div>
+				<div class="col s8">
+					<ul class="collapsible" id="uf-${dataModule['code']}"></ul>
+				</div>
+			</div>`);
 
-function hideUndefined(value) {
-	if(typeof value === "undefined") {
-		return '';
-	}
-	return value;
+			$.each(dataModule['ufs'], function(uf, dataUf) {
+				$(`ul#uf-${dataModule['code']}`).append(`
+				<li>
+					<div class="collapsible-header">${dataUf['code']}. ${dataUf['name']}</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>`);
+			});
+		});
+	});
 }
