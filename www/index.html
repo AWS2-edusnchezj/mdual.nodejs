@@ -31,12 +31,13 @@
 				<div id="docs" class="col s12">
 					<div class="row">
 						<div class="input-field col s4 offset-s8">
-							<select>
+							<select id="selectDocs" onchange="showDocuments(this.value);">
 							  	<option value="" disabled selected>Selecciona el perfil de matrícula</option>
+								<option value="Familia numerosa">Familia númerosa</option>
 							</select>
 						</div>
 					</div>
-					<div class="row">
+					<div id="showDocs" class="row">
 						<ul class="col s12 collection">
 							<li class="collection-item avatar">
 								<i class="material-icons circle">insert_drive_file</i>
@@ -50,7 +51,7 @@
 									<i class="material-icons red-text">sentiment_very_dissatisfied</i>
 								</div>
 							</li>
-						  </ul>
+						</ul>
 					</div>
 				</div>
 				<div id="ufs" class="col s12">
@@ -65,6 +66,7 @@
 							</select>
 						</div>
 					</div>
+					<div id="showUfs" class="row"></div>
 				</div>
 				<div id="usuario" class="col s12">
 					
