@@ -1,5 +1,5 @@
 $('a[href=#ufs]').click(function() {
-	let selectCourse = $('select#selectCourse').material_select();
+	let selectCourse = $('select#selectCourse');
 	$.getJSON("/data/courses.json", function( data ) {
 		$.each(data, function(course, dataCourse) {
 			$(selectCourse).appendTo(`<option>${dataCourse.name}</option>`);
