@@ -1,6 +1,6 @@
 $('a[href=#ufs]').click(function() {
 	let selectCourse = $('select#selectCourse').material_select();
-	$.getJSON("data/courses.json", function( data ) {
+	$.getJSON("/data/courses.json", function( data ) {
 		$.each(data, function(course, dataCourse) {
 			$(selectCourse).appendTo(`<option>${dataCourse.name}</option>`);
 		});
@@ -20,7 +20,7 @@ function showModulesOfCourse(courseIndex) {
         	</div>
       	</div>
 	</div>`);
-	$.getJSON("data/courses.json", function(data) {
+	$.getJSON("/data/courses.json", function(data) {
 		$('div#ufs .row[1] .col h5').html(data[courseIndex]['name']);
 		$('div#showUfs').html('');
 		$.each(data[courseIndex]['modules'], function(module, dataModule) {
@@ -72,7 +72,7 @@ function showDocuments(courseIndex) {
         	</div>
       	</div>
 	</div>`);
-	$.getJSON("data/docs.json", function(data) {
+	$.getJSON("/data/docs.json", function(data) {
 		$('div#showDocs').html('');
 		var number = 1;
 		$.each(data[courseIndex], function(docIndex) {
