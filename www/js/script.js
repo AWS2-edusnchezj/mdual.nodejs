@@ -26,7 +26,7 @@ function showModulesOfCourse(courseIndex) {
 		$.each(data[courseIndex]['modules'], function(module, dataModule) {
 			$('div#showUfs').append(`
 			<div class="col s4">
-				<h6>${dataModule['code']}. ${dataModule['name']}</h6>
+				<span>${dataModule['code']}. ${dataModule['name']}</span>
 			</div>
 			<div class="col s8">
 				<ul class="collapsible" id="uf-${dataModule['code']}"></ul>
@@ -37,7 +37,7 @@ function showModulesOfCourse(courseIndex) {
 				<li>
 					<div class="collapsible-header">
 						<label>
-							<input type="checkbox" onchange="changeSelectedUf(this);" data-state="false" />
+							<input type="checkbox" onchange="changeSelectedUf(this);" data-state="false" checked />
 							<span idUf="[${dataModule['code']}, ${uf}]">${uf}. ${dataUf['name']}</span>
 						</label>
 					</div>
@@ -52,6 +52,11 @@ function changeSelectedUf(elementCheckbox) {
 	if($(elementCheckbox).prop(true)) {
 		console.log($(elementCheckbox).next().attr('idUf') + ' actived');
 	}
+}
+
+function getRandomColor() {
+	let randomColor = ['red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan', 'teal', 'green', 'light-green', 'lime', 'yellow', 'orange', 'brown', 'grey', 'blue-grey'];
+	return randomColor[Math.floor(Math.random() * randomColor.length)];
 }
 
 function showDocuments(courseIndex) {
@@ -69,21 +74,34 @@ function showDocuments(courseIndex) {
 	</div>`);
 	$.getJSON("data/docs.json", function(data) {
 		$('div#showDocs').html('');
+		var number = 1;
 		$.each(data[courseIndex], function(docIndex) {
-			$('div#showDocs .collection').append(`
-			<li class="collection-item avatar">
-				<i class="material-icons circle">insert_drive_file</i>
-				<span class="title">${data[courseIndex][docIndex][0]}</span>
-				<p>${data[courseIndex][docIndex][0]}<br>
-					Second Line
-				</p>
-				<div class="secondary-content">
-					<i class="material-icons green-text">sentiment_very_satisfied</i>
-					<i class="material-icons yellow-text text-darken-3">sentiment_neutral</i>
-					<i class="material-icons red-text">sentiment_very_dissatisfied</i>
-				</div>
-			</li>
+			$('div#showDocs').append(`
+			<ul class="col s12 collection">
+				<li id="document${number}" class="collection-item avatar">
+					<i class="material-icons circle ${getRandomColor()}">insert_drive_file</i>
+					<span class="title">${data[courseIndex][docIndex][0]}</span>
+					<p>Insereix aquí el següent document: ${data[courseIndex][docIndex][0]}<br>
+					<div class="p-1.5 mt-3 mb-3 bg-gray-100 float-left rounded">
+        				<input onchange="uploadDoc(this)" type="file" accept="image/*"> <em>Només s'accepten imatges</em>
+					</div>
+					</p>
+					<div class="secondary-content">
+						<i id="trafficLightGreen" class="material-icons green-text opacity-20" title="Document verificat y correcte">sentiment_very_satisfied</i>
+						<i id="trafficLightOrange" class="material-icons yellow-text text-darken-3 opacity-20" title="Document a verificar">sentiment_neutral</i>
+						<i id="trafficLightRed" class="material-icons red-text opacity-100" title="No entregat">sentiment_very_dissatisfied</i>
+					</div>
+				</li>
+			</ul>
 			`);
+
+			number += 1;
 		});
 	});
+}
+
+function uploadDoc(inputFile) {
+	let parentTrafficLight = $(inputFile).parent().parent().attr('id');
+	$('#' + parentTrafficLight + ' > .secondary-content > #trafficLightRed').removeClass('opacity-100').addClass('opacity-20');
+	$('#' + parentTrafficLight + ' > .secondary-content > #trafficLightOrange').removeClass('opacity-20').addClass('opacity-100');
 }

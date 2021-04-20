@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "cordova-plugin-browsersync-gen2": "^1.1.7",
-    "materialize-css": "^1.0.0-rc.2"
+    "materialize-css": "^1.0.0-rc.2",
+    "tailwindcss": "^2.1.1"
   }
 }
