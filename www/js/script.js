@@ -1,6 +1,6 @@
-$('a[href=#ufs]').click(function() {
-	let selectCourse = $('select#selectCourse');
-	$.getJSON("/data/courses.json", function( data ) {
+$('a[href=ufs]').click(function() {
+	let selectCourse = $('select#selectCourse').material_select();
+	$.getJSON("data/courses.json", function( data ) {
 		$.each(data, function(course, dataCourse) {
 			$(selectCourse).appendTo(`<option>${dataCourse.name}</option>`);
 		});
@@ -20,8 +20,8 @@ function showModulesOfCourse(courseIndex) {
         	</div>
       	</div>
 	</div>`);
-	$.getJSON("/data/courses.json", function(data) {
-		$('div#ufs .row[1] .col h5').html(data[courseIndex]['name']);
+	$.getJSON("data/courses.json", function(data) {
+		$('#selectAllCourse').removeAttr('disabled');
 		$('div#showUfs').html('');
 		$.each(data[courseIndex]['modules'], function(module, dataModule) {
 			$('div#showUfs').append(`
@@ -41,10 +41,22 @@ function showModulesOfCourse(courseIndex) {
 							<span idUf="[${dataModule['code']}, ${uf}]">${uf}. ${dataUf['name']}</span>
 						</label>
 					</div>
-					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+					<div class="collapsible-body"><span></span></div>
 				</li>`);
 			});
 		});
+
+		$('div#showUfs').after(`
+		<div class="row">
+			<div class="col s9"></div>
+			<div class="col s3">
+				<div class="flex flex-row">
+					<span class="flex items-center bg-grey-lighter rounded rounded-r-none px-3 font-bold text-grey-darker">€</span>
+					<input type="number" name="price" class="bg-grey-lighter text-grey-darker py-2 font-normal rounded text-grey-darkest border border-grey-lighter rounded-l-none font-bold" value="0" 
+					readonly>
+				</div>
+			</div>
+		</div>`);
 	});
 }
 
@@ -72,7 +84,7 @@ function showDocuments(courseIndex) {
         	</div>
       	</div>
 	</div>`);
-	$.getJSON("/data/docs.json", function(data) {
+	$.getJSON("data/docs.json", function(data) {
 		$('div#showDocs').html('');
 		var number = 1;
 		$.each(data[courseIndex], function(docIndex) {
@@ -81,7 +93,7 @@ function showDocuments(courseIndex) {
 				<li id="document${number}" class="collection-item avatar">
 					<i class="material-icons circle ${getRandomColor()}">insert_drive_file</i>
 					<span class="title">${data[courseIndex][docIndex][0]}</span>
-					<p>Insereix aquí el següent document: ${data[courseIndex][docIndex][0]}<br>
+					<p>Inserte aquí el siguiente documento: ${data[courseIndex][docIndex][0]}<br>
 					<div class="p-1.5 mt-3 mb-3 bg-gray-100 float-left rounded">
         				<input onchange="uploadDoc(this)" type="file" accept="image/*"> <em>Només s'accepten imatges</em>
 					</div>

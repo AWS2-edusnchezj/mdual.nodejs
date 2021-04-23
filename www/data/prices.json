@@ -1,0 +1,54 @@
+{
+    "middle_career": {
+        "all": {
+            "plus28": {
+                "base": 105.38,
+                "material": 65
+            },
+            "less28": {
+                "base": 86.50,
+                "material": 65
+            }
+        },
+        "modules": {
+            "plus28": {
+                "base": 20,
+                "permodule": 10,
+                "material": 65
+            },
+            "less28": {
+                "base": 1.12,
+                "permodule": 10,
+                "material": 65
+            }
+        }
+    },
+    "superior_career": {
+        "all": {
+            "nobonus": {
+                "plus28": {
+                    "base": 360,
+                    "material": 85
+                },
+                "less28": {
+                    "base": 360,
+                    "material": 66.12
+                }
+            },
+            "bonus50": {
+                "plus28": {
+                    "base": 180,
+                    "material": 85
+                },
+                "less28": {
+                    "base": 180,
+                    "material": 66.12
+                }
+            }
+        },
+        "performativeunit": {
+            "nobonus": 25,
+            "bonus50": 12.50
+        }
+    }
+}
