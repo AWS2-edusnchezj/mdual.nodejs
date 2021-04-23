@@ -37,7 +37,7 @@ function showModulesOfCourse(courseIndex) {
 				<li>
 					<div class="collapsible-header">
 						<label>
-							<input type="checkbox" onchange="changeSelectedUf(this);" data-state="false" checked />
+							<input class="selectedUf" type="checkbox" onchange="changeSelectedUf(this); recalculatePrice();" data-state="false" checked />
 							<span idUf="[${dataModule['code']}, ${uf}]">${uf}. ${dataUf['name']}</span>
 						</label>
 					</div>
@@ -48,21 +48,30 @@ function showModulesOfCourse(courseIndex) {
 
 		$('div#showUfs').after(`
 		<div class="row">
-			<div class="col s9"></div>
-			<div class="col s3">
+			<div class="col s4"></div>
+			<div class="col s4">
 				<div class="flex flex-row">
 					<span class="flex items-center bg-grey-lighter rounded rounded-r-none px-3 font-bold text-grey-darker">€</span>
-					<input type="number" name="price" class="bg-grey-lighter text-grey-darker py-2 font-normal rounded text-grey-darkest border border-grey-lighter rounded-l-none font-bold" value="0" 
+					<input type="number" name="price" class="bg-grey-lighter py-2 font-normal rounded text-grey-darkest border border-grey-lighter rounded-l-none font-bold" value="0" 
 					readonly>
 				</div>
 			</div>
+			<div class="col s4">
+				<button type="button" class="mt-2 focus:outline-none w-full text-white text-sm py-2.5 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">
+					Asignar el curs
+				</button>
+			</div>
 		</div>`);
+
+		recalculatePrice();
 	});
 }
 
 function changeSelectedUf(elementCheckbox) {
-	if($(elementCheckbox).prop(true)) {
-		console.log($(elementCheckbox).next().attr('idUf') + ' actived');
+	if($(elementCheckbox).prop('checked') == false) {
+		$('#selectAllCourse').prop('checked', false);
+	} else if($(elementCheckbox).prop('checked') == true && ($('.selectedUf').length == $('.selectedUf:checked').length)) {
+		$('#selectAllCourse').prop('checked', true);
 	}
 }
 
@@ -116,4 +125,16 @@ function uploadDoc(inputFile) {
 	let parentTrafficLight = $(inputFile).parent().parent().attr('id');
 	$('#' + parentTrafficLight + ' > .secondary-content > #trafficLightRed').removeClass('opacity-100').addClass('opacity-20');
 	$('#' + parentTrafficLight + ' > .secondary-content > #trafficLightOrange').removeClass('opacity-20').addClass('opacity-100');
+}
+
+function recalculatePrice() {
+	$('input[name=price]').val(10.5 * $('.selectedUf:checked').length);
+}
+
+function selectAllUfs() {
+	if($('#selectAllCourse').prop('checked') == true) {
+		$('.selectedUf').prop('checked', true);
+	} else {
+		$('.selectedUf').prop('checked', false);
+	}
 }
